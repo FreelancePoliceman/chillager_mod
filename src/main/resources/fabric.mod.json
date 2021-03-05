@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "chillager_mod",
+  "version": "1.0",
+
+
+  "name": "Chillager",
+  "description": "Adds the Chillager mob to Minecraft.",
+  "authors": [
+    "DukeLeto2",
+    "shamblingcorporatepresence"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/chillager_mod/textures/item/freezing_snowball.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "DukeLeto2.chillager_mod.ChillagerMod"
+    ],
+    "client": [
+      "DukeLeto2.chillager_mod.ChillagerModClient"
+    ]
+  },
+  "accessWidener": "chillager_mod.accesswidener",
+  "mixins": [
+    "chillager.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
