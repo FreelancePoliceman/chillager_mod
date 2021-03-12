@@ -1,0 +1,3 @@
+This mod adds Chillagers from the 2020 mob vote. Chillagers spawn in cold hilly or mountainous biomes, with a configurable spawn density (run the game with this mod enabled once to generate the config file). They attack by throwing magical snowballs which "freeze" the target, slowing their movement and attack speed, then spawning falling chunks of ice above their head. A spawn egg is, of course, provided for players in creative.
+
+Optional features, disabled by default, make the unnamed chillager disappear in A) warm biomes, and B) daytime. The chillager is a fairly powerful entity, and can be dangerous/irritating to encounter frequently; these options are provided to help prevent the chillager from bothering players who live in warm biomes.
