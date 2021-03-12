@@ -83,12 +83,19 @@ public class ChillagerEntity extends HostileEntity implements RangedAttackMob {
             double y = target.getEyeY();
             BlockPos targetPos = target.getBlockPos();
             targetPos = targetPos.add(0,y-targetPos.getY(),0); //Set blockpos at eye height.
+
             for (int i = 0; i < 10; ++i) {
                 targetPos = targetPos.up();
                 if (!this.world.getBlockState(targetPos).isOf(Blocks.AIR)) {
-                    shootSnowball(target);
-                    this.time_when_last_attacked = System.currentTimeMillis();
-                    return;
+                    if (i <= 2) {
+                        if (attackwithsnowballs == false)
+                            return;
+                        shootSnowball(target);
+                        this.time_when_last_attacked = System.currentTimeMillis();
+                        return;
+                    }
+                    else
+                        break; //Allow the chillager to place ice wherever he can, though not the max height.
                 }
             }
             if (target.getEntityWorld().canSetBlock(targetPos)) {
@@ -114,15 +121,6 @@ public class ChillagerEntity extends HostileEntity implements RangedAttackMob {
         this.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.world.spawnEntity(freezingSnowball);
     }
-
-    /*@Override
-    public void addBonusForWave(int wave, boolean unused) {
-    } */
-/*
-    @Override
-    public SoundEvent getCelebratingSound() {
-        return null;
-    }*/
 
     public static DefaultAttributeContainer.Builder createChillagerAttributes() {
         return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 18.0D).add(EntityAttributes.GENERIC_MAX_HEALTH, 32.0D);
