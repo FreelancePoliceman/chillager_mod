@@ -43,7 +43,7 @@ public class FreezingSnowball extends SnowballEntity {
             double y = target.getEyeY();
             BlockPos targetPos = target.getBlockPos();
             targetPos = targetPos.add(0,y-targetPos.getY(),0); //Set blockpos at eye height.
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 5; ++i) {
                 targetPos = targetPos.up();
                 if (this.world.getBlockState(targetPos).isOf(Blocks.AIR)) {
                     return;

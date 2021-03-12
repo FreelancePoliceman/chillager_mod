@@ -26,7 +26,7 @@ public class FallingIceEntity extends FallingBlockEntity {
     public FallingIceEntity(World world, double x, double y, double z, BlockState block) {
         super(world, x, y, z, block);
         this.fallHurtMax = 40;
-        this.fallHurtAmount = 1.0F;
+        this.fallHurtAmount = 2.0F;
         this.block = block;
     }
 

@@ -12,13 +12,11 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -30,13 +28,20 @@ import net.minecraft.world.WorldAccess;
 import java.util.Random;
 
 public class ChillagerEntity extends HostileEntity implements RangedAttackMob {
-    public static boolean vanishinsunlight;
-    public static boolean vanishinheat;
-    public static boolean harmotherchillagers;
-    public static boolean attackwithsnowballs;
-    private double time_when_last_attacked = 0D;
+    private static boolean vanishinsunlight;
+    private static boolean vanishinheat;
     public ChillagerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
+        String s = ChillagerMod.CONFIG.getOrDefault("vanishinsunlight", "n");
+        if (s == "y")
+            vanishinsunlight = true;
+        else
+            vanishinsunlight = false;
+        s = ChillagerMod.CONFIG.getOrDefault("vanishinheat", "n");
+        if (s=="y")
+            vanishinheat = true;
+        else
+            vanishinheat=false;
     }
     @Override
     protected void initGoals() {
@@ -73,33 +78,24 @@ public class ChillagerEntity extends HostileEntity implements RangedAttackMob {
     //Copied from SnowGolemEntity.class
     @Override
     public void attack(LivingEntity target, float pullProgress) {
-        if (System.currentTimeMillis() < this.time_when_last_attacked + 2200 /* Bit over 2 seconds */ )
-            return;
-        if (!this.harmotherchillagers) {
-            if (target instanceof ChillagerEntity)
-                return;
-        }
-        if (target.hasStatusEffect(ChillagerMod.FROZEN_EFFECT) || attackwithsnowballs == false) {
+        if (target.hasStatusEffect(ChillagerMod.FROZEN_EFFECT)) {
             double y = target.getEyeY();
             BlockPos targetPos = target.getBlockPos();
             targetPos = targetPos.add(0,y-targetPos.getY(),0); //Set blockpos at eye height.
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 5; ++i) {
                 targetPos = targetPos.up();
-                if (!this.world.getBlockState(targetPos).isOf(Blocks.AIR)) {
+                if (this.world.getBlockState(targetPos).isOf(Blocks.AIR)) {
                     shootSnowball(target);
-                    this.time_when_last_attacked = System.currentTimeMillis();
                     return;
                 }
             }
             if (target.getEntityWorld().canSetBlock(targetPos)) {
                 this.world.setBlockState(targetPos, ChillagerModBlocks.FALLING_ICE.getDefaultState());
-                this.time_when_last_attacked = System.currentTimeMillis();
                 //this.world.spawnEntity(new FallingIceEntity());
             }
         }
         else {
             shootSnowball(target);
-            this.time_when_last_attacked = System.currentTimeMillis();
         }
     }
 
@@ -132,17 +128,5 @@ public class ChillagerEntity extends HostileEntity implements RangedAttackMob {
             return true;
         }
         return false;
-    }
-
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_EVOKER_AMBIENT;
-    }
-
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_EVOKER_DEATH;
-    }
-
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_EVOKER_HURT;
     }
 }

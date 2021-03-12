@@ -8,8 +8,8 @@ import net.minecraft.entity.effect.StatusEffectType;
 public class FrozenEffect extends StatusEffect {
     public FrozenEffect() {
         super(StatusEffectType.HARMFUL, 0x34d0eb);
-        this.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,"a3c0a246-547c-4e6f-949c-f9bb24b78842", -0.15000000596046448D*5.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL );
-        this.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, "a3c0a246-547c-4e6f-949c-f9bb24b78843", 0.10000000149011612D*5.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        this.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,"a3c0a246-547c-4e6f-949c-f9bb24b78842", -0.15000000596046448D*4.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL );
+        this.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, "a3c0a246-547c-4e6f-949c-f9bb24b78843", 0.10000000149011612D*3.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     }
     @Override
     public boolean canApplyUpdateEffect (int duration, int amplifier) {
